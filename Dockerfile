@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    npm \
     && docker-php-ext-install pdo_mysql zip
 
 # Habilitar el reescritor de URL de Apache
@@ -30,14 +31,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Ejecutar Composer para instalar las dependencias de PHP
 RUN composer install
 
+# Instalar las dependencias de NPM y generar los archivos de construcción
+RUN npm install
+RUN npm run build
+
 # Establecer los permisos adecuados para los archivos y directorios
-#RUN chown -R ${USERNAME}:${USERNAME} storage bootstrap/cache
-#RUN chmod -R 775 storage bootstrap/cache
-
-#RUN chgrp -R www-data storage bootstrap/cache
-#RUN chmod -R ug+rwx storage bootstrap/cache
-#RUN chmod -R o+rwx storage/logs
-
 RUN mkdir -p $APP_HOME/public && \
   mkdir -p /home/$USERNAME && chown $USERNAME:$USERNAME /home/$USERNAME \
   && usermod -u $UID $USERNAME -d /home/$USERNAME \

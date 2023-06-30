@@ -5,7 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class Player extends Model
+class Player extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'skill_level',
+        'strength',
+        'speed',
+        'reaction_time',
+    ];
 }

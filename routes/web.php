@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/create-tournament', [\App\Http\Controllers\TournamentController::class, 'create'])->name('create-tournament');
+Route::get('/start-tournament', [\App\Http\Controllers\TournamentController::class, 'start'])->name('start-tournament');

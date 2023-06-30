@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('tournament_matches', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tournament_id');
             $table->unsignedBigInteger('player1_id');
             $table->unsignedBigInteger('player2_id');
             $table->unsignedBigInteger('winner_id')->nullable();
+            $table->integer('level')->default(1);
             $table->timestamps();
 
+            $table->foreign('tournament_id')->references('id')->on('tournaments');
             $table->foreign('player1_id')->references('id')->on('players');
             $table->foreign('player2_id')->references('id')->on('players');
             $table->foreign('winner_id')->references('id')->on('players');

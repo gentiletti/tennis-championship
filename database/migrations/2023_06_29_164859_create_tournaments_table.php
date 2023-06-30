@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->boolean('is_finished')->default(0);
             $table->timestamps();

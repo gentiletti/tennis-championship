@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\MalePlayer;
+use App\Models\Player;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -49,7 +49,7 @@ class MalePlayersTableSeeder extends Seeder
         ];
 
         foreach ($players as $player) {
-            MalePlayer::create($player);
+            Player::create($player);
         }
     }
 }
