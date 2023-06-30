@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('create-tournament', ['gender' => 'male']) }}">Crear torneo masculino</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('tournament-list') }}">Historial de torneos</a>
+                </li>
             </ul>
         </div>
     </div>

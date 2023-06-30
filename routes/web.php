@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/create-tournament', [\App\Http\Controllers\TournamentController::class, 'create'])->name('create-tournament');
 Route::get('/start-tournament', [\App\Http\Controllers\TournamentController::class, 'start'])->name('start-tournament');
+Route::get('/tournament-list', [\App\Http\Controllers\TournamentController::class, 'list'])->name('tournament-list');

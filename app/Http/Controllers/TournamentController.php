@@ -67,6 +67,18 @@ class TournamentController extends Controller
         ]);
     }
 
+    /**
+     * Lista de torneos.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function list(Request $request)
+    {
+        return view('pages/tournament-list', [
+            'tournaments' => $tournaments,
+        ]);
+    }
+
     private function getPreviousPowerOfTwo($number)
     {
         $power = (int) log($number, 2);

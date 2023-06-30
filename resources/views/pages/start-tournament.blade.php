@@ -13,105 +13,66 @@
 
             <div class="container">
 
-                @foreach ($rounds as $round)
-                @php
-                    dd($round)
-                @endphp
-                @if (count($round >= 4))
+                @foreach ($rounds as $number => $round)
 
-                @elseif (count($round) == 2)
+                @if (isset($round['groups']))
+
                 <div class="round">
-                    <h2>Cuartos de Final</h2>
+                    <h2 class="text-center">Ronda {{ $number }}</h2>
+
                     <div class="row">
+                        @foreach ($round['groups'] as $matches)
                         <div class="col-md-6">
+                            @foreach ($matches as $match)
                             <div class="match">
-                                @foreach ($round[0] as $match)
-                                    <div class="team">{{ $match->player1->name }}</div>
-                                    <div class="team">{{ $match->player2->name }}</div>
-                                @endforeach
+                                <div class="team {{ $match['player1']->is_winner ? 'text-success fw-bold' : '' }}">
+                                    @if ($match['player1']->is_winner)
+                                    <i class="bi bi-star-fill"></i>
+                                    @endif
+                                    {{ $match['player1']->name }}
+                                </div>
+                                <div class="team {{ $match['player2']->is_winner ? 'text-success fw-bold' : '' }}">
+                                    @if ($match['player2']->is_winner)
+                                    <i class="bi bi-star-fill"></i>
+                                    @endif
+                                    {{ $match['player2']->name }}
+                                </div>
                             </div>
+                            @endforeach
                         </div>
-                        <div class="col-md-6">
+                        @endforeach
+                    </div>
+
+                </div>
+
+                @else
+
+                <div class="round">
+                    <h2 class="text-center">Final</h2>
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
                             <div class="match">
-                                @foreach ($round[1] as $match)
-                                    <div class="team">{{ $match->player1->name }}</div>
-                                    <div class="team">{{ $match->player2->name }}</div>
-                                @endforeach
+                                <div class="team {{ $round['matches'][0]['player1']->is_winner ? 'text-success fw-bold' : '' }}">
+                                    @if ($round['matches'][0]['player1']->is_winner)
+                                    <i class="bi bi-star-fill"></i>
+                                    @endif
+                                    {{ $round['matches'][0]['player1']->name }}
+                                </div>
+                                <div class="team {{ $round['matches'][0]['player2']->is_winner ? 'text-success fw-bold' : '' }}">
+                                    @if ($round['matches'][0]['player2']->is_winner)
+                                    <i class="bi bi-star-fill"></i>
+                                    @endif
+                                    {{ $round['matches'][0]['player2']->name }}
+                                </div>
                             </div>
+                            <a href="javascript:;" class="winner-image"><img src="{{ $round['matches'][0]['winner']->image }}" class="rounded mx-auto d-block" alt="{{ $round['matches'][0]['winner']->name }}"></a>
                         </div>
                     </div>
                 </div>
                 @endif
+
                 @endforeach
-
-                <div class="round">
-                    <h2>Octavos de Final</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="match">
-                                <div class="team">Equipo 1</div>
-                                <div class="team">Equipo 8</div>
-                            </div>
-                            <div class="match">
-                                <div class="team">Equipo 4</div>
-                                <div class="team">Equipo 5</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="match">
-                                <div class="team">Equipo 3</div>
-                                <div class="team">Equipo 6</div>
-                            </div>
-                            <div class="match">
-                                <div class="team">Equipo 2</div>
-                                <div class="team">Equipo 7</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="round">
-                    <h2>Cuartos de Final</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="match">
-                                <div class="team">Ganador Octavos 1</div>
-                                <div class="team">Ganador Octavos 2</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="match">
-                                <div class="team">Ganador Octavos 3</div>
-                                <div class="team">Ganador Octavos 4</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="round">
-                    <h2>Semifinales</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="match">
-                                <div class="team">Ganador Cuartos 1</div>
-                                <div class="team">Ganador Cuartos 2</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="round">
-                    <h2>Final</h2>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="match">
-                                <div class="team">Ganador</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
         </div>
     </div>
 </div>

@@ -66,8 +66,8 @@ class Tournament extends Model
      */
     private function getLuck()
     {
-        // Generar un número aleatorio entre 0 y 20 para representar el factor de suerte
-        return rand(0, 20);
+        // Generar un número aleatorio entre 0 y 50 para representar el factor de suerte
+        return rand(0, 50);
     }
 
     public function makeRounds($level, $rounds, $quantity = null)
@@ -106,7 +106,15 @@ class Tournament extends Model
                 $winner = $this->getMaleResult($player1, $player2);
             }
 
-            $rounds[$level][] = [
+            if ($player1->id == $winner->id) {
+                $player1->is_winner = true;
+                $player2->is_winner = false;
+            } else {
+                $player2->is_winner = true;
+                $player1->is_winner = false;
+            }
+
+            $rounds[$level]['matches'][] = [
                 'player1' => $player1,
                 'player2' => $player2,
                 'winner' => $winner,
@@ -116,9 +124,21 @@ class Tournament extends Model
             $match->save();
         }
 
-        if ($quantity > 2) {
+        if ($quantity >= 4) {
+
+            $elementPerGroup = count($rounds[$level]['matches']) / 2;
+            $groups = array_chunk($rounds[$level]['matches'], $elementPerGroup);
+            $rounds[$level]['groups'] = $groups;
+
+            return $this->makeRounds($level + 1, $rounds);
+        } else if ($quantity > 2) {
             return $this->makeRounds($level + 1, $rounds);
         } else {
+
+            $this->is_finished = 1;
+            $this->winner_id = $winner->id;
+            $this->save();
+
             return $rounds;
         }
     }

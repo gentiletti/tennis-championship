@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->boolean('is_finished')->default(0);
+            $table->unsignedBigInteger('winner_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('winner_id')->references('id')->on('players');
         });
     }
 
