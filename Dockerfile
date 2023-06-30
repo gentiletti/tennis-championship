@@ -51,8 +51,5 @@ ENV APP_ENV=local
 # Configurar el directorio raíz del servidor web
 RUN sed -i -e 's/html/html\/public/g' /etc/apache2/sites-available/000-default.conf
 
-# Exponer el puerto 8000 para acceder a la aplicación
-#EXPOSE 8010
-
 # Iniciar el servidor Apache
 CMD ["apache2-foreground"]
