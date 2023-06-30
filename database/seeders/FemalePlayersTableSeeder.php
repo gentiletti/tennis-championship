@@ -126,6 +126,34 @@ class FemalePlayersTableSeeder extends Seeder
                 'skill_level' => rand(80, 100),
                 'reaction_time' => rand(50, 100),
             ],
+            [
+                'name' => 'Pam Shriver',
+                'image' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Pam_Shriver_1994.jpg/374px-Pam_Shriver_1994.jpg',
+                'gender' => 'female',
+                'skill_level' => rand(80, 100),
+                'reaction_time' => rand(50, 100),
+            ],
+            [
+                'name' => 'Helena Sukova',
+                'image' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Helena_Sukov%C3%A1_%28Wimbledon_2009%29.jpg/293px-Helena_Sukov%C3%A1_%28Wimbledon_2009%29.jpg',
+                'gender' => 'female',
+                'skill_level' => rand(80, 100),
+                'reaction_time' => rand(50, 100),
+            ],
+            [
+                'name' => 'Francesca Schiavone',
+                'image' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Francesca_Schiavone_2012.jpg/480px-Francesca_Schiavone_2012.jpg',
+                'gender' => 'female',
+                'skill_level' => rand(80, 100),
+                'reaction_time' => rand(50, 100),
+            ],
+            [
+                'name' => 'Nathalie Tauziat',
+                'image' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Tauziat-Martinez.jpg/480px-Tauziat-Martinez.jpg',
+                'gender' => 'female',
+                'skill_level' => rand(80, 100),
+                'reaction_time' => rand(50, 100),
+            ],
         ];
 
         foreach ($players as $player) {
