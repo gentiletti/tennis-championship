@@ -30,6 +30,16 @@ class TournamentMatch extends Model
     }
 
     /**
+     * Obtener el objeto del ganador.
+     * 
+     * @return Player
+     */
+    public function winner()
+    {
+        return $this->belongsTo(Player::class, 'winner_id');
+    }
+
+    /**
      * Obtener el resultado de un partido.
      *
      * @param Player $player1

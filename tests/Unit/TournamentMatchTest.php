@@ -21,4 +21,12 @@ class TournamentMatchTest extends TestCase
 
         $this->assertContains($winner->id, [$player1->id, $player2->id]);
     }
+
+    public function testMatchResult()
+    {
+        $match = TournamentMatch::find(1);
+        $winner = $match->winner;
+
+        $this->assertNotNull($winner);
+    }
 }

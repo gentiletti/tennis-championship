@@ -47,7 +47,7 @@ class TournamentController extends Controller
     {
         $gender = $request->get('gender');
         $genderName = ($gender == 'female') ? 'femenino' : 'masculino';
-        $quantity = (integer) $request->get('quantity');
+        $quantity = (int) $request->get('quantity');
         $matchesQuantity = $quantity / 2;
 
         // Crear torneo
@@ -57,14 +57,11 @@ class TournamentController extends Controller
         $tournament->save();
 
         // Crear rondas, partidos y jugarlos
-        $rounds = $tournament->makeRounds(1, [], $quantity);
-        //dd($rounds);
+        $tournament->makeRounds(1, [], $quantity);
 
-        return view('pages/start-tournament', [
-            'genderName' => $genderName,
-            'tournament' => $tournament,
-            'rounds' => $rounds,
-        ]);
+        // Redirigir a la vista del detalle del torneo
+        return redirect()->route('show-tournament', ['id' => $tournament->id]);
+
     }
 
     /**
@@ -74,8 +71,67 @@ class TournamentController extends Controller
      */
     public function list(Request $request)
     {
+        $tournaments = Tournament::orderBy('created_at', 'DESC')->paginate(10);
+
         return view('pages/tournament-list', [
             'tournaments' => $tournaments,
+        ]);
+    }
+
+    /**
+     * Mostrar detalle del torneo.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function show($id)
+    {
+        $tournament = Tournament::find($id);
+
+        $matchRounds = TournamentMatch::select('level')->where('tournament_id', $id)
+            ->groupBy('level')
+            ->get();
+
+        $rounds = [];
+
+        foreach ($matchRounds as $matchRound) {
+
+            $level = $matchRound->level;
+            $matches = TournamentMatch::where('tournament_id', $id)
+                ->where('level', $level)
+                ->get();
+
+            foreach ($matches as $match) {
+
+                $player1 = $match->player1;
+                $player2 = $match->player2;
+                $winner = $match->winner;
+
+                if ($player1->id == $winner->id) {
+                    $player1->is_winner = true;
+                    $player2->is_winner = false;
+                } else {
+                    $player2->is_winner = true;
+                    $player1->is_winner = false;
+                }
+
+                $rounds[$matchRound->level]['matches'][] = [
+                    'player1' => $player1,
+                    'player2' => $player2,
+                    'winner' => $winner,
+                ];
+            }
+
+            if (count($matches) > 1) {
+                $elementPerGroup = count($rounds[$level]['matches']) / 2;
+                $groups = array_chunk($rounds[$level]['matches'], $elementPerGroup);
+                $rounds[$level]['groups'] = $groups;
+            }
+
+        }
+
+        return view('pages/show-tournament', [
+            'tournament' => $tournament,
+            'rounds' => $rounds,
         ]);
     }
 

@@ -17,3 +17,4 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 Route::get('/create-tournament', [\App\Http\Controllers\TournamentController::class, 'create'])->name('create-tournament');
 Route::get('/start-tournament', [\App\Http\Controllers\TournamentController::class, 'start'])->name('start-tournament');
 Route::get('/tournament-list', [\App\Http\Controllers\TournamentController::class, 'list'])->name('tournament-list');
+Route::get('/tournament/{id}', [\App\Http\Controllers\TournamentController::class, 'show'])->name('show-tournament');

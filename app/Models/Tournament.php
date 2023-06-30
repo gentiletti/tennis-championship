@@ -18,6 +18,16 @@ class Tournament extends Model
     }
 
     /**
+     * Obtener el objeto del jugador campeón.
+     * 
+     * @return Player
+     */
+    public function winner()
+    {
+        return $this->belongsTo(Player::class, 'winner_id');
+    }
+
+    /**
      * Crear las rondas
      */
     public function makeRounds($level, $rounds, $quantity = null)
@@ -88,4 +98,5 @@ class Tournament extends Model
             return $rounds;
         }
     }
+
 }
