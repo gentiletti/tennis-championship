@@ -21,6 +21,7 @@ services:
       - db
   db:
     image: mysql:5.7
+    container_name: tennis-db
     ports:
       - 3316:3306
     environment:
